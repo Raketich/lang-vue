@@ -1,12 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Books from "../components/Books";
-import Words from "../components/Words";
-import Login from "../components/Login";
-import Logout from "../components/Logout";
-import Register from "../components/Register";
-import Profile from "../components/Profile";
+import Books from "../views/Books";
+import Words from "../views/Words";
+import Login from "../views/Login";
+import Logout from "../views/Logout";
+import Register from "../views/Register";
+import Profile from "../views/Profile";
 
 Vue.use(VueRouter);
 

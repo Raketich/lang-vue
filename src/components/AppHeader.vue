@@ -62,12 +62,12 @@ export default {
         {
           icon: "mdi-login-variant",
           title: "Log In",
-          route: "/signin"
+          route: "/login"
         },
         {
           icon: "mdi-lock-open",
           title: "Register",
-          route: "/signup"
+          route: "/register"
         }
       ];
     }
