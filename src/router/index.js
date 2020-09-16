@@ -7,6 +7,7 @@ import Login from "../views/Login";
 import Logout from "../views/Logout";
 import Register from "../views/Register";
 import Profile from "../views/Profile";
+import Store from "../store";
 
 Vue.use(VueRouter);
 
@@ -44,7 +45,8 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    comppnent: Profile
+    comppnent: Profile,
+    beforeEnter: AuthGuard
   }
 ];
 
@@ -53,5 +55,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+function AuthGuard(from, to, next) {
+  if (Store.getters.isUserAuthenticated) next();
+  else next("/login");
+}
 
 export default router;

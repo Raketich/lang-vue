@@ -10,7 +10,7 @@
             <v-alert type="warning" :value="error">
               {{ error }}
             </v-alert>
-            <v-form>
+            <v-form v-model="valid">
               <v-text-field
                 label="e-mail"
                 name="login"
@@ -18,6 +18,7 @@
                 type="email"
                 required
                 v-model="email"
+                :rules="emailRules"
               ></v-text-field>
 
               <v-text-field
@@ -27,12 +28,16 @@
                 prepend-icon="mdi-lock"
                 type="password"
                 v-model="password"
+                :rules="passwordRules"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="login" :disabled="processing"
+            <v-btn
+              color="primary"
+              @click.prevent="login"
+              :disabled="processing || !valid"
               >Login</v-btn
             >
           </v-card-actions>
@@ -48,7 +53,21 @@ export default {
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      valid: false,
+      emailRules: [
+        (v) => !!v || "Please, type in you email",
+        (v) =>
+          /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(
+            v
+          ) || "Неправильный email"
+      ],
+      passwordsRules: [
+        (v) => !!v || "Please, type in you password",
+        (v) =>
+          (v && v.length >= 6) ||
+          "Password should contain at least 6 characters"
+      ]
     };
   },
   computed: {

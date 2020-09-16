@@ -55,6 +55,9 @@ export default {
       } else {
         commit("UNSET_USER");
       }
+    },
+    SIGNOUT() {
+      firebase.auth().signOut();
     }
   },
   getters: {

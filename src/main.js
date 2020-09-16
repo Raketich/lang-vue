@@ -3,10 +3,17 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import VuetifyConfirm from "vuetify-confirm";
 import firebaseConfig from "./config/firebase";
 import firebase from "firebase";
 
 Vue.config.productionTip = false;
+
+Vue.use(VuetifyConfirm, {
+  vuetify,
+  buttonTrueText: "Accept",
+  buttonFalseText: "Discard"
+});
 
 firebase.initializeApp(firebaseConfig);
 

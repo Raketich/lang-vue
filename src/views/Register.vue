@@ -18,6 +18,7 @@
                 type="email"
                 required
                 v-model="email"
+                :rules="emailRules"
               ></v-text-field>
 
               <v-text-field
@@ -27,6 +28,7 @@
                 prepend-icon="mdi-lock"
                 type="password"
                 v-model="password"
+                :rules="passwordRules"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -51,7 +53,20 @@ export default {
     return {
       email: null,
       password: null,
-      valid: false
+      valid: false,
+      emailRules: [
+        (v) => !!v || "Please, type in you email",
+        (v) =>
+          /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/.test(
+            v
+          ) || "Неправильный email"
+      ],
+      passwordsRules: [
+        (v) => !!v || "Please, type in you password",
+        (v) =>
+          (v && v.length >= 6) ||
+          "Password should contain at least 6 characters"
+      ]
     };
   },
   computed: {

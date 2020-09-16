@@ -36,6 +36,10 @@
           <v-icon left v-html="item.icon"></v-icon>
           {{ item.title }}
         </v-btn>
+        <v-btn text @click.prevent="signout" v-if="isUserAuthenticated">
+          <v-icon left>mdi-logout-variant</v-icon>
+          Log Out
+        </v-btn>
       </v-toolbar-items>
       <div class="d-flex align-center"></div>
     </v-app-bar>
@@ -70,11 +74,6 @@ export default {
               icon: "mdi-account-circle",
               title: "Profile",
               route: "/profile"
-            },
-            {
-              icon: "mdi-logout-variant",
-              title: "Log Out",
-              route: "/logout"
             }
           ]
         : [
@@ -89,6 +88,13 @@ export default {
               route: "/register"
             }
           ];
+    }
+  },
+  methods: {
+    signout() {
+      this.$confirm("Are you leaving?").then((res) => {
+        if (res) this.$store.dispatch("SIGNOUT");
+      });
     }
   }
 };
