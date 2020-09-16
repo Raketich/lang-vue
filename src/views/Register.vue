@@ -10,7 +10,7 @@
             <v-alert type="warning" :value="error">
               {{ error }}
             </v-alert>
-            <v-form>
+            <v-form v-model="valid">
               <v-text-field
                 label="e-mail"
                 name="login"
@@ -35,7 +35,7 @@
             <v-btn
               color="primary"
               @click.prevent="register"
-              :disabled="processing"
+              :disabled="processing || !valid"
               >Register</v-btn
             >
           </v-card-actions>
@@ -50,7 +50,8 @@ export default {
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      valid: false
     };
   },
   computed: {
@@ -59,6 +60,9 @@ export default {
     },
     processing() {
       return this.$store.getters.getProcessing;
+    },
+    isUserAuthenticated() {
+      return this.$store.getters.isUserAuthenticated;
     }
   },
   methods: {
@@ -67,6 +71,11 @@ export default {
         email: this.email,
         password: this.password
       });
+    }
+  },
+  watch: {
+    isUserAuthenticated(val) {
+      if (val === true) this.$router.push("/");
     }
   }
 };
