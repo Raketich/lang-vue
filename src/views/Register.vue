@@ -1,12 +1,15 @@
 <template>
   <v-container class="fill-height" fluid>
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="4">
+      <v-col cols="12" sm="8" md="6">
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark flat>
             <v-toolbar-title>Register Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
+            <v-alert type="warning" :value="error">
+              {{ error }}
+            </v-alert>
             <v-form>
               <v-text-field
                 label="e-mail"
@@ -14,6 +17,7 @@
                 prepend-icon="mdi-account"
                 type="email"
                 required
+                v-model="email"
               ></v-text-field>
 
               <v-text-field
@@ -22,12 +26,18 @@
                 name="password"
                 prepend-icon="mdi-lock"
                 type="password"
+                v-model="password"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary">Register</v-btn>
+            <v-btn
+              color="primary"
+              @click.prevent="register"
+              :disabled="processing"
+              >Register</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
@@ -42,9 +52,24 @@ export default {
       email: null,
       password: null
     };
+  },
+  computed: {
+    error() {
+      return this.$store.getters.getError;
+    },
+    processing() {
+      return this.$store.getters.getProcessing;
+    }
+  },
+  methods: {
+    register() {
+      this.$store.dispatch("REGISTER", {
+        email: this.email,
+        password: this.password
+      });
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
